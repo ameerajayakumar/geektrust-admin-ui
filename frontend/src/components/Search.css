@@ -1,0 +1,11 @@
+.searchBox {
+  /* border: 2px solid red; */
+  padding: 2rem 10rem 1rem 10rem;
+}
+.searchTextField {
+  width: 30%;
+}
+.MuiInputBase-root.MuiInput-root {
+  font-size: 14px;
+  padding: 4px 0px 2px 8px;
+}
