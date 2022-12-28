@@ -5,12 +5,12 @@
 /* .MuiTableCell-root.MuiTableCell-head.tableHeader {
   border-bottom: unset;
 } */
-.MuiTableCell-root.nousersfound {
+/* .MuiTableCell-root.nousersfound {
   text-align: center;
   padding: 10rem 0rem;
   border: unset;
   font-size: 16px;
-}
+} */
 /* .MuiTableRow-root.MuiTableRow-head.tableRow {
   display: flex;
   flex-direction: row;
@@ -23,4 +23,12 @@
 .MuiTableCell-head.tableHeader {
   font-weight: 900;
   letter-spacing: 2px;
+  text-align: center;
+}
+.MuiTableCell-root.MuiTableCell-body {
+  text-align: center;
+}
+
+.MuiButtonBase-root.MuiIconButton-root {
+  color: #d0d1d2;
 }

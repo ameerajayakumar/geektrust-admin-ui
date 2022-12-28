@@ -2,7 +2,7 @@ import Search from './Search';
 import { config } from '../utils/Config';
 import DataTable from './DataTable';
 import Footer from './Footer';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './LandingPage.css';
@@ -36,7 +36,7 @@ const LandingPage = () => {
       const role = user.role;
       return name.toLowerCase().includes(searchKeyword) || email.toLowerCase().includes(searchKeyword) || role.toLowerCase().includes(searchKeyword);
     });
-    if (filteredUsers.length) updateUsers(filteredUsers);
+    updateUsers(filteredUsers);
   };
 
   return (
@@ -48,7 +48,12 @@ const LandingPage = () => {
           <Footer></Footer>
         </Box>
       ) : (
-        <Box></Box>
+        <Box>
+          <Search performSearch={performSearchCall}></Search>
+          <Typography variant="h6" component="div" className="nousersfound">
+            No Users Found!
+          </Typography>
+        </Box>
       )}
     </Box>
   );

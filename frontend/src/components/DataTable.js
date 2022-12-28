@@ -1,4 +1,6 @@
-import { Table, TableBody, TableCell, TableContainer, Box, TableRowColumn, TableHead, TableRow } from '@mui/material';
+import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './DataTable.css';
 import { styled } from '@mui/material/styles';
 
@@ -21,27 +23,25 @@ const DataTable = ({ userData }) => {
             <StyledCell className="tableHeader">ACTIONS</StyledCell>
           </TableRow>
         </TableHead>
-        {userData.length ? (
-          <TableBody>
-            {userData.map((row) => (
-              <TableRow key={row.id} className="tableRow">
-                <StyledCell>X</StyledCell>
-                <StyledCell>{row.name}</StyledCell>
-                <StyledCell>{row.email}</StyledCell>
-                <StyledCell>{row.role}</StyledCell>
-                <StyledCell> EDIT DELETE</StyledCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        ) : (
-          <TableBody>
-            <TableRow>
-              <StyledCell colSpan={5} className="nousersfound">
-                No Users Found!
+
+        <TableBody>
+          {userData.map((row) => (
+            <TableRow key={row.id} className="tableRow">
+              <StyledCell>X</StyledCell>
+              <StyledCell>{row.name}</StyledCell>
+              <StyledCell>{row.email}</StyledCell>
+              <StyledCell>{row.role}</StyledCell>
+              <StyledCell>
+                <IconButton aria-label="edit user" component="label" size="small">
+                  <ModeEditIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton aria-label="edit user" component="label" size="small">
+                  <DeleteForeverIcon fontSize="small" />
+                </IconButton>
               </StyledCell>
             </TableRow>
-          </TableBody>
-        )}
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );
