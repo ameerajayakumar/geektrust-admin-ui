@@ -2,7 +2,7 @@ import Search from './Search';
 import { config } from '../utils/Config';
 import DataTable from './DataTable';
 import Footer from './Footer';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './LandingPage.css';
@@ -10,16 +10,20 @@ import './LandingPage.css';
 const LandingPage = () => {
   const [userData, updateUsers] = useState([]);
   const [userCopyData, updateCopyUsers] = useState([]);
+  const [loading, showLoader] = useState(false);
 
   useEffect(() => {
     const performAPICall = async () => {
       try {
+        showLoader(true);
         const response = await axios(`${config.endpoint}`);
         updateUsers(response.data);
         updateCopyUsers(response.data);
+        showLoader(false);
         return response.data;
       } catch (error) {
         console.log('error', error.message);
+        showLoader(false);
         return null;
       }
     };
@@ -38,21 +42,31 @@ const LandingPage = () => {
     });
     updateUsers(filteredUsers);
   };
-
   return (
     <Box>
-      {userData.length ? (
-        <Box>
-          <Search performSearch={performSearchCall}></Search>
-          <DataTable userData={userData}></DataTable>
-          <Footer></Footer>
+      {loading ? (
+        <Box className="loading">
+          <CircularProgress />
+          <Typography variant="h4" component="div">
+            Loading Users...
+          </Typography>
         </Box>
       ) : (
         <Box>
-          <Search performSearch={performSearchCall}></Search>
-          <Typography variant="h6" component="div" className="nousersfound">
-            No Users Found!
-          </Typography>
+          {userData.length ? (
+            <Box>
+              <Search performSearch={performSearchCall}></Search>
+              <DataTable userData={userData}></DataTable>
+              <Footer></Footer>
+            </Box>
+          ) : (
+            <Box>
+              <Search performSearch={performSearchCall}></Search>
+              <Typography variant="h6" component="div" className="nousersfound">
+                No Users Found!
+              </Typography>
+            </Box>
+          )}
         </Box>
       )}
     </Box>

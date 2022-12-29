@@ -27,8 +27,28 @@
 }
 .MuiTableCell-root.MuiTableCell-body {
   text-align: center;
+  letter-spacing: 2px;
 }
 
 .MuiButtonBase-root.MuiIconButton-root {
   color: #d0d1d2;
+}
+.editRow {
+  background-color: #232323;
+}
+.MuiInputBase-input.MuiInput-input.Mui-disabled {
+  -webkit-text-fill-color: unset;
+  color: #ffffff;
+}
+/* .emailCell {
+  width: 50%;
+} */
+.MuiTextField-root.nameCell {
+  padding-left: 60px;
+}
+.MuiTextField-root.emailCell {
+  padding-left: 80px;
+}
+.MuiTextField-root.roleCell {
+  padding-left: 90px;
 }
