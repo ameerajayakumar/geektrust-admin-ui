@@ -17,6 +17,9 @@ const TablePagination = ({ pageRange, userData, setPage, page }) => {
     } else if (page === 1) {
       setFirstDisable(true);
       setLastDisable(false);
+    } else {
+      setFirstDisable(false);
+      setLastDisable(false);
     }
   }, [page, pageRange]);
 
