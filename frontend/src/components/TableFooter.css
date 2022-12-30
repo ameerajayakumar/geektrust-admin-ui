@@ -1,0 +1,16 @@
+.tableFooter {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.MuiButtonBase-root.MuiButton-root.deleteSelectedBtn {
+  background-color: #f44336;
+  color: #eeeeee;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.MuiButtonBase-root.MuiButton-root.deleteSelectedBtn.Mui-disabled {
+  background-color: #da8787;
+  color: #945f5f;
+}

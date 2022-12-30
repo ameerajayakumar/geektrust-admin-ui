@@ -1,7 +1,6 @@
 import Search from './Search';
 import { config } from '../utils/Config';
 import DataTable from './DataTable';
-import Footer from './Footer';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -29,6 +28,7 @@ const LandingPage = () => {
     };
     const onPageLoad = async () => {
       const data = await performAPICall();
+      console.log('API RESPONSE:: ', data);
     };
     onPageLoad();
   }, []);
@@ -57,7 +57,6 @@ const LandingPage = () => {
             <Box>
               <Search performSearch={performSearchCall}></Search>
               <DataTable userData={userData}></DataTable>
-              <Footer></Footer>
             </Box>
           ) : (
             <Box>

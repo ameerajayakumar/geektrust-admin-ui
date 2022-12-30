@@ -2,10 +2,12 @@
   /* border: 2px solid red; */
   padding: 2rem 10rem 1rem 10rem;
 }
-.searchTextField {
-  width: 30%;
-}
-.MuiInputBase-root.MuiInput-root {
+
+.MuiInputBase-root.MuiInput-root.searchInner {
   font-size: 14px;
   padding: 4px 0px 2px 8px;
+  width: 100%;
+}
+.searchTextField {
+  width: 400px;
 }

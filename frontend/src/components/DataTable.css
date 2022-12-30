@@ -2,24 +2,6 @@
   padding: 1rem 10rem 2rem 10rem;
   box-sizing: border-box;
 }
-/* .MuiTableCell-root.MuiTableCell-head.tableHeader {
-  border-bottom: unset;
-} */
-/* .MuiTableCell-root.nousersfound {
-  text-align: center;
-  padding: 10rem 0rem;
-  border: unset;
-  font-size: 16px;
-} */
-/* .MuiTableRow-root.MuiTableRow-head.tableRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0rem 0.5rem 0rem 1rem;
-} */
-/* .MuiTableRow-head.tableRow {
-  font-weight: 900;
-} */
 .MuiTableCell-head.tableHeader {
   font-weight: 900;
   letter-spacing: 2px;
@@ -40,15 +22,15 @@
   -webkit-text-fill-color: unset;
   color: #ffffff;
 }
-/* .emailCell {
-  width: 50%;
-} */
-.MuiTextField-root.nameCell {
-  padding-left: 60px;
+
+.MuiInputBase-root.MuiInput-root.innerCell {
+  font-size: 14px;
 }
-.MuiTextField-root.emailCell {
-  padding-left: 80px;
+.userCell {
+  width: 180px;
+  text-align: center;
 }
-.MuiTextField-root.roleCell {
-  padding-left: 90px;
+.tableHeader.header {
+  position: relative;
+  left: -70px;
 }

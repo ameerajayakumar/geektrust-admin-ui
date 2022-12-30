@@ -28,6 +28,7 @@ const Search = ({ performSearch }) => {
           sx: { color: '#ffffff', fontSize: '16px', bgcolor: '#121212' },
           className: 'searchInner',
           disableUnderline: true,
+          autoComplete: 'no',
         }}
       />
     </Box>
