@@ -1,8 +1,9 @@
 import { Box, Button } from '@mui/material';
 import TablePagination from './TablePagination';
+import { useState } from 'react';
 import './TableFooter.css';
 
-const TableFooter = ({ selectedRows, deleteSeleted, users, usersPerPage }) => {
+const TableFooter = ({ selectedRows, deleteSeleted, users, totalPages, setPage, page }) => {
   return (
     <Box className="tableFooter">
       <Button
@@ -14,9 +15,10 @@ const TableFooter = ({ selectedRows, deleteSeleted, users, usersPerPage }) => {
       >
         Delete Selected
       </Button>
-      <TablePagination userData={users} usersPerPage={usersPerPage} />
+      <TablePagination pageRange={totalPages} userData={users} setPage={setPage} page={page} />
     </Box>
   );
 };
 
 export default TableFooter;
+//table

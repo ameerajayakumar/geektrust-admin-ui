@@ -6,6 +6,7 @@ import TableFooter from './TableFooter';
 import './DataTable.css';
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+import useDataTable from '../hooks/useDataTable';
 
 const StyledCell = styled(TableCell)(() => ({
   color: '#ffffff',
@@ -14,27 +15,32 @@ const StyledCell = styled(TableCell)(() => ({
 }));
 
 const DataTable = ({ userData }) => {
-  const [rowData, setRows] = useState(userData);
   const [editRow, setEditRow] = useState('');
   const [ischeckAll, setCheckAll] = useState(false);
   const [ischecked, setSelectedRow] = useState([]);
+  const [page, setPage] = useState(1);
+  const { pageRange, pageData } = useDataTable(userData, page, 10);
+  const [rowData, setRows] = useState(pageData);
 
   useEffect(() => {
-    setRows(userData);
-  }, [userData]);
+    setRows(pageData);
+  }, [userData, pageData]);
 
   const handleRowDelete = (id) => {
-    setRows(rowData.filter((row) => row.id !== id));
+    const afterDeletionUsers = rowData.filter((row) => row.id !== id);
+    //if only one user & its deleted, move to prev page
+    if (afterDeletionUsers.length < 1 && page !== 1) setPage(page - 1);
+    else setRows(afterDeletionUsers);
   };
 
   const handleBulkDelete = () => {
-    setRows(rowData.filter((row) => !ischecked.includes(row.id)));
+    setRows(pageData.filter((row) => !ischecked.includes(row.id)));
     setSelectedRow([]);
     if (ischeckAll) setCheckAll(false);
   };
 
   const handleEditUser = (id, event) => {
-    let usersAfterEdition = rowData.map((user) => {
+    let usersAfterEdition = pageData.map((user) => {
       if (user.id === id && event.target.name === 'name') {
         user.name = event.target.value;
         return user;
@@ -51,7 +57,7 @@ const DataTable = ({ userData }) => {
 
   const handleCheckAll = () => {
     setCheckAll(!ischeckAll);
-    setSelectedRow(rowData.map((row) => row.id));
+    setSelectedRow(pageData.map((row) => row.id));
     if (ischeckAll) {
       setSelectedRow([]);
     }
@@ -180,7 +186,14 @@ const DataTable = ({ userData }) => {
           ))}
         </TableBody>
       </Table>
-      <TableFooter selectedRows={ischecked} deleteSeleted={handleBulkDelete} users={rowData} usersPerPage={10}></TableFooter>
+      <TableFooter
+        selectedRows={ischecked}
+        deleteSeleted={handleBulkDelete}
+        users={rowData}
+        totalPages={pageRange}
+        setPage={setPage}
+        page={page}
+      ></TableFooter>
     </TableContainer>
   );
 };
