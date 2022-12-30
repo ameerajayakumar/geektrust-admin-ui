@@ -1,6 +1,5 @@
 import { Box, Button } from '@mui/material';
 import TablePagination from './TablePagination';
-import { useState } from 'react';
 import './TableFooter.css';
 
 const TableFooter = ({ selectedRows, deleteSeleted, users, totalPages, setPage, page }) => {

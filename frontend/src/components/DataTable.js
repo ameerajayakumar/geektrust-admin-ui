@@ -11,7 +11,6 @@ import useDataTable from '../hooks/useDataTable';
 const StyledCell = styled(TableCell)(() => ({
   color: '#ffffff',
   letterSpacing: '1px',
-  // fontSize: '0.85rem',
 }));
 
 const DataTable = ({ userData }) => {
@@ -34,10 +33,17 @@ const DataTable = ({ userData }) => {
   };
 
   const handleBulkDelete = () => {
-    setRows(pageData.filter((row) => !ischecked.includes(row.id)));
+    console.log('Selected', ischecked);
+    console.log('pageData', pageData);
+    const bulkSelection = pageData.filter((row) => !ischecked.includes(row.id));
+    if (bulkSelection.length < 1 && page === 1) setPage(page + 1);
+    else setPage(page - 1);
+    console.log('bulkd', bulkSelection);
+    // setRows(bulkSelection);
     setSelectedRow([]);
     if (ischeckAll) setCheckAll(false);
   };
+  console.log('rowdatss', rowData);
 
   const handleEditUser = (id, event) => {
     let usersAfterEdition = pageData.map((user) => {
@@ -176,9 +182,13 @@ const DataTable = ({ userData }) => {
                     else setEditRow('');
                   }}
                 >
-                  {editRow === row.id ? <SaveIcon fontSize="inherit" /> : <ModeEditIcon fontSize="inherit" />}
+                  {editRow === row.id ? (
+                    <SaveIcon className="saveicon" fontSize="inherit" />
+                  ) : (
+                    <ModeEditIcon fontSize="inherit" className="editicon" />
+                  )}
                 </IconButton>
-                <IconButton aria-label="edit user" component="label" size="small" onClick={() => handleRowDelete(row.id)}>
+                <IconButton className="deleteicon" aria-label="delete user" component="label" size="small" onClick={() => handleRowDelete(row.id)}>
                   <DeleteForeverIcon fontSize="small" />
                 </IconButton>
               </StyledCell>

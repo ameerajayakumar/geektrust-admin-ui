@@ -57,4 +57,3 @@ const TablePagination = ({ pageRange, userData, setPage, page }) => {
 };
 
 export default TablePagination;
-//footer

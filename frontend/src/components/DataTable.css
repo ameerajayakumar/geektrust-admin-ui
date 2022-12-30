@@ -34,3 +34,12 @@
   position: relative;
   left: -70px;
 }
+.MuiButtonBase-root.MuiIconButton-root.deleteicon:hover {
+  color: #f44336;
+}
+.MuiSvgIcon-root.editicon:hover {
+  color: #3d85c6;
+}
+.MuiSvgIcon-root.saveicon:hover {
+  color: #088f25;
+}
