@@ -21,6 +21,7 @@ const LandingPage = () => {
         showLoader(false);
         return response.data;
       } catch (error) {
+        //can use enqueueSnackbar instead of console.log
         console.log('error', error.message);
         showLoader(false);
         return null;
@@ -28,7 +29,6 @@ const LandingPage = () => {
     };
     const onPageLoad = async () => {
       const data = await performAPICall();
-      console.log('API RESPONSE:: ', data);
     };
     onPageLoad();
   }, []);
@@ -42,8 +42,10 @@ const LandingPage = () => {
     });
     updateUsers(filteredUsers);
   };
+
   return (
     <Box>
+      <Search performSearch={performSearchCall}></Search>
       {loading ? (
         <Box className="loading">
           <CircularProgress />
@@ -55,12 +57,11 @@ const LandingPage = () => {
         <Box>
           {userData.length ? (
             <Box>
-              <Search performSearch={performSearchCall}></Search>
               <DataTable userData={userData}></DataTable>
             </Box>
           ) : (
             <Box>
-              <Search performSearch={performSearchCall}></Search>
+              {/* <Search performSearch={performSearchCall}></Search> */}
               <Typography variant="h6" component="div" className="nousersfound">
                 No Users Found!
               </Typography>

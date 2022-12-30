@@ -1,4 +1,4 @@
-import { IconButton, TextField, Checkbox, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton, TextField, Box, Typography, Checkbox, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import SaveIcon from '@mui/icons-material/Save';
@@ -33,17 +33,21 @@ const DataTable = ({ userData }) => {
   };
 
   const handleBulkDelete = () => {
-    console.log('Selected', ischecked);
-    console.log('pageData', pageData);
-    const bulkSelection = pageData.filter((row) => !ischecked.includes(row.id));
-    if (bulkSelection.length < 1 && page === 1) setPage(page + 1);
-    else setPage(page - 1);
-    console.log('bulkd', bulkSelection);
-    // setRows(bulkSelection);
-    setSelectedRow([]);
-    if (ischeckAll) setCheckAll(false);
+    const bulkSelection = rowData.filter((row) => !ischecked.includes(row.id));
+    if (bulkSelection.length >= 1) {
+      setRows(bulkSelection);
+      setSelectedRow([]);
+      if (ischeckAll) setCheckAll(false);
+    } else if (bulkSelection.length < 1 && page === 1) {
+      setPage(page + 1);
+      setSelectedRow([]);
+      if (ischeckAll) setCheckAll(false);
+    } else {
+      setPage(page - 1);
+      setSelectedRow([]);
+      if (ischeckAll) setCheckAll(false);
+    }
   };
-  console.log('rowdatss', rowData);
 
   const handleEditUser = (id, event) => {
     let usersAfterEdition = pageData.map((user) => {
@@ -63,7 +67,7 @@ const DataTable = ({ userData }) => {
 
   const handleCheckAll = () => {
     setCheckAll(!ischeckAll);
-    setSelectedRow(pageData.map((row) => row.id));
+    setSelectedRow(rowData.map((row) => row.id));
     if (ischeckAll) {
       setSelectedRow([]);
     }
@@ -77,134 +81,144 @@ const DataTable = ({ userData }) => {
   };
 
   return (
-    <TableContainer className="tableContainer">
-      <Table>
-        <TableHead>
-          <TableRow key="tableHeadingsID">
-            <StyledCell className="tableHeader">
-              <Checkbox
-                checked={ischeckAll}
-                onChange={handleCheckAll}
-                size="small"
-                sx={{
-                  color: '#ffffff',
-                  '&.Mui-checked': {
-                    color: '#ffffff',
-                  },
-                }}
-              />
-            </StyledCell>
-            <StyledCell className="tableHeader header">NAME</StyledCell>
-            <StyledCell className="tableHeader header">EMAIL</StyledCell>
-            <StyledCell className="tableHeader header">ROLE</StyledCell>
-            <StyledCell className="tableHeader ">ACTIONS</StyledCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {rowData.map((row) => (
-            <TableRow key={row.id} className={editRow === row.id || ischecked.includes(row.id) ? 'editRow' : 'noneditRow'}>
-              <StyledCell>
-                <Checkbox
-                  checked={ischecked.includes(row.id)}
-                  onChange={handleCheckedRow}
-                  key={row.id}
-                  id={row.id}
-                  size="small"
-                  sx={{
-                    color: '#ffffff',
-                    '&.Mui-checked': {
+    <>
+      {rowData.length ? (
+        <TableContainer className="tableContainer">
+          <Table>
+            <TableHead>
+              <TableRow key="tableHeadingsID">
+                <StyledCell className="tableHeader">
+                  <Checkbox
+                    checked={ischeckAll}
+                    onChange={handleCheckAll}
+                    size="small"
+                    sx={{
                       color: '#ffffff',
-                    },
-                  }}
-                />
-              </StyledCell>
-              <StyledCell>
-                <TextField
-                  key={row.id}
-                  disabled={editRow === row.id ? false : true}
-                  className="nameCell userCell"
-                  size="small"
-                  placeholder="user name"
-                  name="name"
-                  value={row.name}
-                  variant="standard"
-                  InputProps={{
-                    sx: { color: '#ffffff', fontSize: '16px' },
-                    className: 'inputName innerCell',
-                    disableUnderline: true,
-                  }}
-                  onChange={(event) => handleEditUser(row.id, event)}
-                />
-              </StyledCell>
-              <StyledCell>
-                <TextField
-                  disabled={editRow === row.id ? false : true}
-                  className="emailCell userCell"
-                  size="small"
-                  placeholder="user email"
-                  name="email"
-                  value={row.email}
-                  variant="standard"
-                  InputProps={{
-                    sx: { color: '#ffffff', fontSize: '16px' },
-                    className: 'inputEmail innerCell',
-                    disableUnderline: true,
-                  }}
-                  onChange={(event) => handleEditUser(row.id, event)}
-                />
-              </StyledCell>
-              <StyledCell>
-                <TextField
-                  disabled={editRow === row.id ? false : true}
-                  className="roleCell userCell"
-                  size="small"
-                  placeholder="role"
-                  name="role"
-                  value={row.role}
-                  variant="standard"
-                  InputProps={{
-                    sx: { color: '#ffffff', fontSize: '16px' },
-                    className: 'inputRole innerCell',
-                    disableUnderline: true,
-                  }}
-                  onChange={(event) => handleEditUser(row.id, event)}
-                />
-              </StyledCell>
-              <StyledCell>
-                <IconButton
-                  aria-label="edit or save user"
-                  component="label"
-                  size="small"
-                  onClick={() => {
-                    const currRowId = row.id;
-                    if (editRow !== currRowId) setEditRow(row.id);
-                    else setEditRow('');
-                  }}
-                >
-                  {editRow === row.id ? (
-                    <SaveIcon className="saveicon" fontSize="inherit" />
-                  ) : (
-                    <ModeEditIcon fontSize="inherit" className="editicon" />
-                  )}
-                </IconButton>
-                <IconButton className="deleteicon" aria-label="delete user" component="label" size="small" onClick={() => handleRowDelete(row.id)}>
-                  <DeleteForeverIcon fontSize="small" />
-                </IconButton>
-              </StyledCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <TableFooter
-        selectedRows={ischecked}
-        deleteSeleted={handleBulkDelete}
-        users={rowData}
-        totalPages={pageRange}
-        setPage={setPage}
-        page={page}
-      ></TableFooter>
-    </TableContainer>
+                      '&.Mui-checked': {
+                        color: '#ffffff',
+                      },
+                    }}
+                  />
+                </StyledCell>
+                <StyledCell className="tableHeader header">NAME</StyledCell>
+                <StyledCell className="tableHeader header">EMAIL</StyledCell>
+                <StyledCell className="tableHeader header">ROLE</StyledCell>
+                <StyledCell className="tableHeader ">ACTIONS</StyledCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {rowData.map((row) => (
+                <TableRow key={row.id} className={editRow === row.id || ischecked.includes(row.id) ? 'editRow' : 'noneditRow'}>
+                  <StyledCell>
+                    <Checkbox
+                      checked={ischecked.includes(row.id)}
+                      onChange={handleCheckedRow}
+                      key={row.id}
+                      id={row.id}
+                      size="small"
+                      sx={{
+                        color: '#ffffff',
+                        '&.Mui-checked': {
+                          color: '#ffffff',
+                        },
+                      }}
+                    />
+                  </StyledCell>
+                  <StyledCell>
+                    <TextField
+                      key={row.id}
+                      disabled={editRow === row.id ? false : true}
+                      className="nameCell userCell"
+                      size="small"
+                      placeholder="user name"
+                      name="name"
+                      value={row.name}
+                      variant="standard"
+                      InputProps={{
+                        sx: { color: '#ffffff', fontSize: '16px' },
+                        className: 'inputName innerCell',
+                        disableUnderline: true,
+                      }}
+                      onChange={(event) => handleEditUser(row.id, event)}
+                    />
+                  </StyledCell>
+                  <StyledCell>
+                    <TextField
+                      disabled={editRow === row.id ? false : true}
+                      className="emailCell userCell"
+                      size="small"
+                      placeholder="user email"
+                      name="email"
+                      value={row.email}
+                      variant="standard"
+                      InputProps={{
+                        sx: { color: '#ffffff', fontSize: '16px' },
+                        className: 'inputEmail innerCell',
+                        disableUnderline: true,
+                      }}
+                      onChange={(event) => handleEditUser(row.id, event)}
+                    />
+                  </StyledCell>
+                  <StyledCell>
+                    <TextField
+                      disabled={editRow === row.id ? false : true}
+                      className="roleCell userCell"
+                      size="small"
+                      placeholder="role"
+                      name="role"
+                      value={row.role}
+                      variant="standard"
+                      InputProps={{
+                        sx: { color: '#ffffff', fontSize: '16px' },
+                        className: 'inputRole innerCell',
+                        disableUnderline: true,
+                      }}
+                      onChange={(event) => handleEditUser(row.id, event)}
+                    />
+                  </StyledCell>
+                  <StyledCell>
+                    <IconButton
+                      aria-label="edit or save user"
+                      component="label"
+                      size="small"
+                      onClick={() => {
+                        const currRowId = row.id;
+                        if (editRow !== currRowId) setEditRow(row.id);
+                        else setEditRow('');
+                      }}
+                    >
+                      {editRow === row.id ? (
+                        <SaveIcon className="saveicon" fontSize="inherit" />
+                      ) : (
+                        <ModeEditIcon fontSize="inherit" className="editicon" />
+                      )}
+                    </IconButton>
+                    <IconButton
+                      className="deleteicon"
+                      aria-label="delete user"
+                      component="label"
+                      size="small"
+                      onClick={() => handleRowDelete(row.id)}
+                    >
+                      <DeleteForeverIcon fontSize="small" />
+                    </IconButton>
+                  </StyledCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TableFooter
+            selectedRows={ischecked}
+            deleteSeleted={handleBulkDelete}
+            users={rowData}
+            totalPages={pageRange}
+            setPage={setPage}
+            page={page}
+          ></TableFooter>
+        </TableContainer>
+      ) : null}
+    </>
   );
 };
 
