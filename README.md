@@ -53,3 +53,11 @@ Sample Response :
 4. Edit Users: can edit user details in-place.
 5. Pagination done: to see & navigate to individual pages, next page, previous page, last page & first page.
 6. Stack: HTML, CSS, JavaScript, REACTJS
+
+## To get the code working locally:
+
+1. cd frontend/
+2. npm start
+3. Go to http://localhost:3000/ to view the UI.
+
+### Note: Site is also deployed in netlify at: https://manage-admin-geektrust.netlify.app/
