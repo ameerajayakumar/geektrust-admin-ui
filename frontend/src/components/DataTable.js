@@ -27,6 +27,12 @@ const DataTable = ({ userData }) => {
     setRows(rowData.filter((row) => row.id !== id));
   };
 
+  const handleBulkDelete = () => {
+    setRows(rowData.filter((row) => !ischecked.includes(row.id)));
+    setSelectedRow([]);
+    if (ischeckAll) setCheckAll(false);
+  };
+
   const handleEditUser = (id, event) => {
     let usersAfterEdition = rowData.map((user) => {
       if (user.id === id && event.target.name === 'name') {
@@ -43,7 +49,7 @@ const DataTable = ({ userData }) => {
     setRows(usersAfterEdition);
   };
 
-  const handleCheckAll = (event) => {
+  const handleCheckAll = () => {
     setCheckAll(!ischeckAll);
     setSelectedRow(rowData.map((row) => row.id));
     if (ischeckAll) {
@@ -85,7 +91,7 @@ const DataTable = ({ userData }) => {
 
         <TableBody>
           {rowData.map((row) => (
-            <TableRow key={row.id} className={editRow === row.id ? 'editRow' : 'noneditRow'}>
+            <TableRow key={row.id} className={editRow === row.id || ischecked.includes(row.id) ? 'editRow' : 'noneditRow'}>
               <StyledCell>
                 <Checkbox
                   checked={ischecked.includes(row.id)}
@@ -174,7 +180,7 @@ const DataTable = ({ userData }) => {
           ))}
         </TableBody>
       </Table>
-      <TableFooter selectedRows={ischecked}></TableFooter>
+      <TableFooter selectedRows={ischecked} deleteSeleted={handleBulkDelete} users={rowData} usersPerPage={10}></TableFooter>
     </TableContainer>
   );
 };
