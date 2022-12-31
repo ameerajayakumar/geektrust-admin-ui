@@ -1,6 +1,6 @@
 # geektrust-admin-ui
 
-Coding Challenge: https://www.geektrust.com/coding/detailed/admin-ui
+Frontend Coding Challenge: https://www.geektrust.com/coding/detailed/admin-ui
 
 ## Requirements as part of the coding challenge:
 
